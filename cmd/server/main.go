@@ -1,10 +1,12 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"os"
 
 	"github.com/go-kratos/kratos-layout/internal/conf"
+	"github.com/go-kratos/kratos-layout/internal/otel"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/config"
@@ -73,6 +75,15 @@ func main() {
 	if err := c.Scan(&bc); err != nil {
 		panic(err)
 	}
+
+	// OpenTelemetry
+	res := otel.NewResource(logger, &bc, Name)
+	defer otel.InitTraceProvider(
+		logger,
+		otel.NewSampler(&bc),
+		otel.NewTraceExporter(logger, bc.Trace),
+		res,
+	)(context.Background())
 
 	app, cleanup, err := wireApp(bc.Server, bc.Data, logger)
 	if err != nil {

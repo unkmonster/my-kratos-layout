@@ -1,3 +1,4 @@
+env: dev
 server:
   http:
     addr: 0.0.0.0:8000
@@ -21,3 +22,8 @@ data:
     username:
     password:
     db: 0
+trace:
+  endpoint: localhost:4317
+  production_sample_rate: 0.1
+metrics:
+  endpoint: localhost:4317
