@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/go-kratos/kratos-layout/internal/conf"
-	"github.com/go-kratos/kratos-layout/internal/otel"
+	"github.com/go-kratos/kratos-layout/internal/pkg/otel"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/config"
