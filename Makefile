@@ -2,6 +2,9 @@ GOHOSTOS:=$(shell go env GOHOSTOS)
 GOPATH:=$(shell go env GOPATH)
 VERSION=$(shell git describe --tags --always)
 
+MIGRATION_DIR = ./db/migrations
+MIGRATE_CMD = migrate
+
 ifeq ($(GOHOSTOS), windows)
 	#the `find.exe` is different from `find` in bash/shell.
 	#to see https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/find.
@@ -41,7 +44,9 @@ api:
  	       --go_out=paths=source_relative:./api \
  	       --go-http_out=paths=source_relative:./api \
  	       --go-grpc_out=paths=source_relative:./api \
-	       --openapi_out=fq_schema_naming=true,default_response=false:. \
+		   --go-errors_out=paths=source_relative:./api \
+		   --validate_out=paths=source_relative,lang=go:./api \
+	       --openapi_out=fq_schema_naming=true,default_response=false,title=Mango,version=$(VERSION):. \
 	       $(API_PROTO_FILES)
 
 .PHONY: build
@@ -61,6 +66,15 @@ all:
 	make api;
 	make config;
 	make generate;
+
+.PHONY: migration
+migration:
+	@if [ -z "$(name)" ]; then \
+		echo "❌ 请指定 name 参数，如: make migrate-create name=create_user"; \
+		exit 1; \
+	fi
+	@migrate create -ext sql -dir db/migrations -seq "$(name)"
+	@echo "✅ Migration created: $(name)"
 
 # show help
 help:

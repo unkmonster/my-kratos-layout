@@ -1,7 +1,12 @@
 FROM golang:1.23 AS builder
 
-COPY . /src
+# 缓存 go mod download
 WORKDIR /src
+COPY go.mod go.sum .
+
+RUN go mod download
+
+COPY . .
 
 RUN make build
 
@@ -14,7 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         && apt-get autoremove -y && apt-get autoclean -y
 
 COPY --from=builder /src/bin /app
-COPY --from=builder /src/configs /data/conf
+#COPY --from=builder /src/configs /data/conf
 
 WORKDIR /app
 

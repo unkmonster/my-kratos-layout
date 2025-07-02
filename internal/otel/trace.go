@@ -20,7 +20,7 @@ func NewTraceExporter(logger log.Logger, conf *conf.Trace) *otlptrace.Exporter {
 	opts := []otlptracegrpc.Option{}
 
 	if conf.Endpoint != "" {
-		opts = append(opts, otlptracegrpc.WithEndpoint(conf.Endpoint))
+		opts = append(opts, otlptracegrpc.WithEndpoint(conf.Endpoint), otlptracegrpc.WithInsecure())
 	}
 	exp, err := otlptracegrpc.New(context.Background(), opts...)
 	if err != nil {
