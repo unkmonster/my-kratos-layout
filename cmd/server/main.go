@@ -76,16 +76,24 @@ func main() {
 		panic(err)
 	}
 
-	// OpenTelemetry
+	// init otel
 	res := otel.NewResource(logger, &bc, Name)
-	defer otel.InitTraceProvider(
+	close := otel.InitTraceProvider(
 		logger,
 		otel.NewSampler(&bc),
-		otel.NewTraceExporter(logger, bc.Trace),
+		otel.NewTraceExporter(logger, bc.Observability),
 		res,
-	)(context.Background())
+	)
+	defer close(context.Background())
 
-	app, cleanup, err := wireApp(bc.Server, bc.Data, logger)
+	app, cleanup, err := wireApp(
+		logger,
+		&bc,
+		bc.Server,
+		bc.Data,
+		bc.Observability,
+		bc.Client,
+	)
 	if err != nil {
 		panic(err)
 	}

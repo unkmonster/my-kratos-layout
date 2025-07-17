@@ -16,7 +16,8 @@ type TraceProviderOption struct {
 	AppName string
 }
 
-func NewTraceExporter(logger log.Logger, conf *conf.Trace) *otlptrace.Exporter {
+func NewTraceExporter(logger log.Logger, c *conf.Observability) *otlptrace.Exporter {
+	conf := c.Trace
 	opts := []otlptracegrpc.Option{}
 
 	if conf.Endpoint != "" {
@@ -30,11 +31,11 @@ func NewTraceExporter(logger log.Logger, conf *conf.Trace) *otlptrace.Exporter {
 	return exp
 }
 
-func NewSampler(bt *conf.Bootstrap) tracesdk.Sampler {
-	if bt.Env == conf.Env_DEV || bt.Env == conf.Env_ENV_UNSPECIFIED {
+func NewSampler(bs *conf.Bootstrap) tracesdk.Sampler {
+	if bs.Env == conf.Env_DEV || bs.Env == conf.Env_UNSPECIFIED {
 		return tracesdk.ParentBased(tracesdk.AlwaysSample())
 	}
-	return tracesdk.ParentBased(tracesdk.TraceIDRatioBased(float64(bt.Trace.ProductionSampleRate)))
+	return tracesdk.ParentBased(tracesdk.TraceIDRatioBased(float64(bs.Observability.Trace.ProductionSampleRate)))
 }
 
 func InitTraceProvider(logger log.Logger, sampler tracesdk.Sampler, exp *otlptrace.Exporter, res *resourcesdk.Resource) ShutdownFunc {

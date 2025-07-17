@@ -5,13 +5,21 @@ option go_package = "github.com/go-kratos/kratos-layout/internal/conf;conf";
 
 import "google/protobuf/duration.proto";
 
-// todo 服务注册 & 发现
+// TODO 服务注册 & 发现
 message Bootstrap {
-  Server server = 1;
-  Data data = 2;
-  Env env = 3;
-  Trace trace = 4;
-  Metrics metrics = 5;
+  Env env = 1;
+  Server server = 2;
+  Data data = 3;
+  Observability observability = 4;
+  Client client = 5;
+  App app = 15;
+}
+
+enum Env {
+  UNSPECIFIED = 0;
+  DEV = 1;
+  STAGING = 2;
+  PROD = 3;
 }
 
 message Server {
@@ -52,21 +60,28 @@ message Data {
   Redis redis = 2;
 }
 
-enum Env {
-  ENV_UNSPECIFIED = 0;
-  DEV = 1;
-  STAGING = 2;
-  PROD = 3;
+message Observability {
+  message Trace {
+    // host:port grpc endpoint
+    string endpoint = 1;
+    // 生产环境采样率，仅生产环境
+    float production_sample_rate = 2;
+  }
+  message Metrics {
+    // grpc endpoint
+    string endpoint = 1;
+  }
+  Trace trace = 1;
+  Metrics metrics = 2;
 }
 
-message Trace {
-  // host:port grpc endpoint
-  string endpoint = 1;
-  // 生产环境采样率，仅生产环境
-  float production_sample_rate = 2;
-}
+message Client {
+  message HTTP {
+    int32 retry_count = 1;
+  }
+  HTTP http = 1;
+} 
 
-message Metrics {
-  // grpc endpoint
-  string endpoint = 1;
+message App {
+
 }
