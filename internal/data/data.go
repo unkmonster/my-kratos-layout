@@ -1,6 +1,9 @@
 package data
 
 import (
+	"context"
+
+	"github.com/go-kratos/kratos-layout/internal/biz"
 	"github.com/go-kratos/kratos-layout/internal/conf"
 
 	"github.com/go-kratos/kratos/v2/log"
@@ -9,6 +12,8 @@ import (
 
 // ProviderSet is data providers.
 var ProviderSet = wire.NewSet(NewData, NewGreeterRepo)
+
+var _ biz.Transaction = (*Data)(nil)
 
 // Data .
 type Data struct {
@@ -21,4 +26,9 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 		log.NewHelper(logger).Info("closing the data resources")
 	}
 	return &Data{}, cleanup, nil
+}
+
+// Exec implements biz.Transaction.
+func (d *Data) Exec(ctx context.Context, fn func(ctx context.Context) error) error {
+	panic("unimplemented")
 }
