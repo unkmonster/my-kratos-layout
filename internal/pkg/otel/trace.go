@@ -32,7 +32,7 @@ func NewTraceExporter(logger log.Logger, c *conf.Observability) *otlptrace.Expor
 }
 
 func NewSampler(bs *conf.Bootstrap) tracesdk.Sampler {
-	if bs.Env == conf.Env_DEV || bs.Env == conf.Env_UNSPECIFIED {
+	if bs.Env == conf.Env_ENV_DEV || bs.Env == conf.Env_ENV_UNSPECIFIED {
 		return tracesdk.ParentBased(tracesdk.AlwaysSample())
 	}
 	return tracesdk.ParentBased(tracesdk.TraceIDRatioBased(float64(bs.Observability.Trace.ProductionSampleRate)))

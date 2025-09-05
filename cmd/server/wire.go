@@ -20,7 +20,7 @@ import (
 // wireApp init kratos application.
 func wireApp(
 	log.Logger,
-	*conf.Bootstrap,
+	*conf.Env,
 	*conf.Server,
 	*conf.Data,
 	*conf.Observability,

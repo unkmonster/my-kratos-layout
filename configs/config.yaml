@@ -1,4 +1,4 @@
-env: dev
+env: ENV_DEV
 server:
   http:
     addr: 0.0.0.0:8000

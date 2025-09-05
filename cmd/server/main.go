@@ -88,7 +88,7 @@ func main() {
 
 	app, cleanup, err := wireApp(
 		logger,
-		&bc,
+		&bc.Env,
 		bc.Server,
 		bc.Data,
 		bc.Observability,

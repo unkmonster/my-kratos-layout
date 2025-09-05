@@ -16,10 +16,10 @@ message Bootstrap {
 }
 
 enum Env {
-  UNSPECIFIED = 0;
-  DEV = 1;
-  STAGING = 2;
-  PROD = 3;
+  ENV_UNSPECIFIED = 0;
+  ENV_DEV = 1;
+  ENV_STAGING = 2;
+  ENV_PROD = 3;
 }
 
 message Server {
