@@ -2,6 +2,8 @@ GOHOSTOS:=$(shell go env GOHOSTOS)
 GOPATH:=$(shell go env GOPATH)
 VERSION=$(shell git describe --tags --always)
 
+LAYOUT_REPOSITORY:=https://github.com/unkmonster/my-kratos-layout
+
 ifeq ($(GOHOSTOS), windows)
 	#the `find.exe` is different from `find` in bash/shell.
 	#to see https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/find.
@@ -48,6 +50,13 @@ generate:
 all:
 	make api;
 	make generate;
+
+.PHONY: service
+service:
+	mkdir -p app && \
+	cd app && \
+	kratos new $(name) -r $(LAYOUT_REPOSITORY) --nomod && \
+	rm $(name)/layout.mk
 
 # show help
 help:
