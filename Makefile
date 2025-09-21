@@ -46,8 +46,9 @@ api:
  	       --go-grpc_out=paths=source_relative:./api \
 		   --go-errors_out=paths=source_relative:./api \
 		   --validate_out=paths=source_relative,lang=go:./api \
-	       --openapi_out=fq_schema_naming=true,default_response=false,title=Mango,version=$(VERSION):. \
-	       $(API_PROTO_FILES)
+	       --openapi_out=fq_schema_naming=true,default_response=false,version=$(VERSION):. \
+	       $(API_PROTO_FILES) && \
+		   yq eval -o=json openapi.yaml > openapi.json
 
 .PHONY: build
 # build

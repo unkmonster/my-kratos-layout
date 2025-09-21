@@ -36,3 +36,15 @@ bin/
 .vscode/
 .idea/
 *.swp
+
+# OPENAPI
+openapi.yaml
+openapi.json
+
+node_modules
+.next
+
+__debug_bin*
+.VSCodeCounter
+
+.env
