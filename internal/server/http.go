@@ -19,9 +19,9 @@ func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, logger log.L
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),
+			tracing.Server(),
 			metadata.Server(),
 			logging.Server(logger),
-			tracing.Server(),
 			validate.ProtoValidate(),
 		),
 	}
