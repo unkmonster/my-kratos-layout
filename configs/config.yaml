@@ -3,6 +3,10 @@ server:
   http:
     addr: 0.0.0.0:8000
     timeout: 1s
+    real_ip:
+      ip_headers: ["X-Real-IP", "X-Forwarded-For", "X-Client-IP"]
+      trusted_proxies: []
+      trusted_header: "X-Connecting-IP"
   grpc:
     addr: 0.0.0.0:9000
     timeout: 1s

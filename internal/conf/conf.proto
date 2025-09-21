@@ -24,9 +24,18 @@ enum Env {
 
 message Server {
   message HTTP {
+    message RealIP {
+      // 包含客户端 IP 的 http header
+      repeated string ip_headers = 1;
+      // 受信任的下游代理 CIDR/IP
+      repeated string trusted_proxies = 2;
+      // maybe from CDN
+      string trusted_header = 3;
+    }
     string network = 1;
     string addr = 2;
     google.protobuf.Duration timeout = 3;
+    RealIP real_ip = 4;
   }
   message GRPC {
     string network = 1;

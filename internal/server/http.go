@@ -4,6 +4,8 @@ import (
 	v1 "github.com/go-kratos/kratos-layout/api/helloworld/v1"
 	"github.com/go-kratos/kratos-layout/internal/conf"
 	"github.com/go-kratos/kratos-layout/internal/service"
+	"github.com/unkmonster/go-kit/middleware/http/realip"
+	"github.com/unkmonster/go-kit/middleware/http/requestid"
 
 	"github.com/go-kratos/kratos/contrib/middleware/validate/v2"
 	"github.com/go-kratos/kratos/v2/log"
@@ -20,6 +22,13 @@ func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, logger log.L
 		http.Middleware(
 			recovery.Recovery(),
 			tracing.Server(),
+			requestid.Server(),
+			realip.Server(
+				logger,
+				realip.WithIpHeaders(c.Http.RealIp.IpHeaders),
+				realip.WithTrustedHeader(c.Http.RealIp.TrustedHeader),
+				realip.WithTrustedProxies(c.Http.RealIp.TrustedProxies),
+			),
 			metadata.Server(),
 			logging.Server(logger),
 			validate.ProtoValidate(),
