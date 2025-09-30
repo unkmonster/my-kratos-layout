@@ -401,6 +401,7 @@ type Server_HTTP struct {
 	Addr          string                 `protobuf:"bytes,2,opt,name=addr,proto3" json:"addr,omitempty"`
 	Timeout       *durationpb.Duration   `protobuf:"bytes,3,opt,name=timeout,proto3" json:"timeout,omitempty"`
 	RealIp        *Server_HTTP_RealIP    `protobuf:"bytes,4,opt,name=real_ip,json=realIp,proto3" json:"real_ip,omitempty"`
+	Cors          *Server_HTTP_CORS      `protobuf:"bytes,5,opt,name=cors,proto3" json:"cors,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -459,6 +460,13 @@ func (x *Server_HTTP) GetTimeout() *durationpb.Duration {
 func (x *Server_HTTP) GetRealIp() *Server_HTTP_RealIP {
 	if x != nil {
 		return x.RealIp
+	}
+	return nil
+}
+
+func (x *Server_HTTP) GetCors() *Server_HTTP_CORS {
+	if x != nil {
+		return x.Cors
 	}
 	return nil
 }
@@ -586,6 +594,74 @@ func (x *Server_HTTP_RealIP) GetTrustedHeader() string {
 	return ""
 }
 
+type Server_HTTP_CORS struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	AllowCredentials bool                   `protobuf:"varint,1,opt,name=allow_credentials,json=allowCredentials,proto3" json:"allow_credentials,omitempty"`
+	AllowedHeaders   []string               `protobuf:"bytes,2,rep,name=allowed_headers,json=allowedHeaders,proto3" json:"allowed_headers,omitempty"`
+	AllowedMethods   []string               `protobuf:"bytes,3,rep,name=allowed_methods,json=allowedMethods,proto3" json:"allowed_methods,omitempty"`
+	AllowedOrigins   []string               `protobuf:"bytes,4,rep,name=allowed_origins,json=allowedOrigins,proto3" json:"allowed_origins,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *Server_HTTP_CORS) Reset() {
+	*x = Server_HTTP_CORS{}
+	mi := &file_conf_conf_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Server_HTTP_CORS) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Server_HTTP_CORS) ProtoMessage() {}
+
+func (x *Server_HTTP_CORS) ProtoReflect() protoreflect.Message {
+	mi := &file_conf_conf_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Server_HTTP_CORS.ProtoReflect.Descriptor instead.
+func (*Server_HTTP_CORS) Descriptor() ([]byte, []int) {
+	return file_conf_conf_proto_rawDescGZIP(), []int{1, 0, 1}
+}
+
+func (x *Server_HTTP_CORS) GetAllowCredentials() bool {
+	if x != nil {
+		return x.AllowCredentials
+	}
+	return false
+}
+
+func (x *Server_HTTP_CORS) GetAllowedHeaders() []string {
+	if x != nil {
+		return x.AllowedHeaders
+	}
+	return nil
+}
+
+func (x *Server_HTTP_CORS) GetAllowedMethods() []string {
+	if x != nil {
+		return x.AllowedMethods
+	}
+	return nil
+}
+
+func (x *Server_HTTP_CORS) GetAllowedOrigins() []string {
+	if x != nil {
+		return x.AllowedOrigins
+	}
+	return nil
+}
+
 type Data_Database struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Driver        string                 `protobuf:"bytes,1,opt,name=driver,proto3" json:"driver,omitempty"`
@@ -601,7 +677,7 @@ type Data_Database struct {
 
 func (x *Data_Database) Reset() {
 	*x = Data_Database{}
-	mi := &file_conf_conf_proto_msgTypes[9]
+	mi := &file_conf_conf_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -613,7 +689,7 @@ func (x *Data_Database) String() string {
 func (*Data_Database) ProtoMessage() {}
 
 func (x *Data_Database) ProtoReflect() protoreflect.Message {
-	mi := &file_conf_conf_proto_msgTypes[9]
+	mi := &file_conf_conf_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -693,7 +769,7 @@ type Data_Redis struct {
 
 func (x *Data_Redis) Reset() {
 	*x = Data_Redis{}
-	mi := &file_conf_conf_proto_msgTypes[10]
+	mi := &file_conf_conf_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -705,7 +781,7 @@ func (x *Data_Redis) String() string {
 func (*Data_Redis) ProtoMessage() {}
 
 func (x *Data_Redis) ProtoReflect() protoreflect.Message {
-	mi := &file_conf_conf_proto_msgTypes[10]
+	mi := &file_conf_conf_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -782,7 +858,7 @@ type Observability_Trace struct {
 
 func (x *Observability_Trace) Reset() {
 	*x = Observability_Trace{}
-	mi := &file_conf_conf_proto_msgTypes[11]
+	mi := &file_conf_conf_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -794,7 +870,7 @@ func (x *Observability_Trace) String() string {
 func (*Observability_Trace) ProtoMessage() {}
 
 func (x *Observability_Trace) ProtoReflect() protoreflect.Message {
-	mi := &file_conf_conf_proto_msgTypes[11]
+	mi := &file_conf_conf_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -834,7 +910,7 @@ type Observability_Metrics struct {
 
 func (x *Observability_Metrics) Reset() {
 	*x = Observability_Metrics{}
-	mi := &file_conf_conf_proto_msgTypes[12]
+	mi := &file_conf_conf_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -846,7 +922,7 @@ func (x *Observability_Metrics) String() string {
 func (*Observability_Metrics) ProtoMessage() {}
 
 func (x *Observability_Metrics) ProtoReflect() protoreflect.Message {
-	mi := &file_conf_conf_proto_msgTypes[12]
+	mi := &file_conf_conf_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -878,7 +954,7 @@ type Client_HTTP struct {
 
 func (x *Client_HTTP) Reset() {
 	*x = Client_HTTP{}
-	mi := &file_conf_conf_proto_msgTypes[13]
+	mi := &file_conf_conf_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -890,7 +966,7 @@ func (x *Client_HTTP) String() string {
 func (*Client_HTTP) ProtoMessage() {}
 
 func (x *Client_HTTP) ProtoReflect() protoreflect.Message {
-	mi := &file_conf_conf_proto_msgTypes[13]
+	mi := &file_conf_conf_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -925,20 +1001,26 @@ const file_conf_conf_proto_rawDesc = "" +
 	"\x04data\x18\x03 \x01(\v2\x10.kratos.api.DataR\x04data\x12?\n" +
 	"\robservability\x18\x04 \x01(\v2\x19.kratos.api.ObservabilityR\robservability\x12*\n" +
 	"\x06client\x18\x05 \x01(\v2\x12.kratos.api.ClientR\x06client\x12!\n" +
-	"\x03app\x18\x0f \x01(\v2\x0f.kratos.api.AppR\x03app\"\xeb\x03\n" +
+	"\x03app\x18\x0f \x01(\v2\x0f.kratos.api.AppR\x03app\"\xce\x05\n" +
 	"\x06Server\x12+\n" +
 	"\x04http\x18\x01 \x01(\v2\x17.kratos.api.Server.HTTPR\x04http\x12+\n" +
-	"\x04grpc\x18\x02 \x01(\v2\x17.kratos.api.Server.GRPCR\x04grpc\x1a\x9b\x02\n" +
+	"\x04grpc\x18\x02 \x01(\v2\x17.kratos.api.Server.GRPCR\x04grpc\x1a\xfe\x03\n" +
 	"\x04HTTP\x12\x18\n" +
 	"\anetwork\x18\x01 \x01(\tR\anetwork\x12\x12\n" +
 	"\x04addr\x18\x02 \x01(\tR\x04addr\x123\n" +
 	"\atimeout\x18\x03 \x01(\v2\x19.google.protobuf.DurationR\atimeout\x127\n" +
-	"\areal_ip\x18\x04 \x01(\v2\x1e.kratos.api.Server.HTTP.RealIPR\x06realIp\x1aw\n" +
+	"\areal_ip\x18\x04 \x01(\v2\x1e.kratos.api.Server.HTTP.RealIPR\x06realIp\x120\n" +
+	"\x04cors\x18\x05 \x01(\v2\x1c.kratos.api.Server.HTTP.CORSR\x04cors\x1aw\n" +
 	"\x06RealIP\x12\x1d\n" +
 	"\n" +
 	"ip_headers\x18\x01 \x03(\tR\tipHeaders\x12'\n" +
 	"\x0ftrusted_proxies\x18\x02 \x03(\tR\x0etrustedProxies\x12%\n" +
-	"\x0etrusted_header\x18\x03 \x01(\tR\rtrustedHeader\x1ai\n" +
+	"\x0etrusted_header\x18\x03 \x01(\tR\rtrustedHeader\x1a\xae\x01\n" +
+	"\x04CORS\x12+\n" +
+	"\x11allow_credentials\x18\x01 \x01(\bR\x10allowCredentials\x12'\n" +
+	"\x0fallowed_headers\x18\x02 \x03(\tR\x0eallowedHeaders\x12'\n" +
+	"\x0fallowed_methods\x18\x03 \x03(\tR\x0eallowedMethods\x12'\n" +
+	"\x0fallowed_origins\x18\x04 \x03(\tR\x0eallowedOrigins\x1ai\n" +
 	"\x04GRPC\x12\x18\n" +
 	"\anetwork\x18\x01 \x01(\tR\anetwork\x12\x12\n" +
 	"\x04addr\x18\x02 \x01(\tR\x04addr\x123\n" +
@@ -995,7 +1077,7 @@ func file_conf_conf_proto_rawDescGZIP() []byte {
 }
 
 var file_conf_conf_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_conf_conf_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
+var file_conf_conf_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_conf_conf_proto_goTypes = []any{
 	(Env)(0),                      // 0: kratos.api.Env
 	(*Bootstrap)(nil),             // 1: kratos.api.Bootstrap
@@ -1007,12 +1089,13 @@ var file_conf_conf_proto_goTypes = []any{
 	(*Server_HTTP)(nil),           // 7: kratos.api.Server.HTTP
 	(*Server_GRPC)(nil),           // 8: kratos.api.Server.GRPC
 	(*Server_HTTP_RealIP)(nil),    // 9: kratos.api.Server.HTTP.RealIP
-	(*Data_Database)(nil),         // 10: kratos.api.Data.Database
-	(*Data_Redis)(nil),            // 11: kratos.api.Data.Redis
-	(*Observability_Trace)(nil),   // 12: kratos.api.Observability.Trace
-	(*Observability_Metrics)(nil), // 13: kratos.api.Observability.Metrics
-	(*Client_HTTP)(nil),           // 14: kratos.api.Client.HTTP
-	(*durationpb.Duration)(nil),   // 15: google.protobuf.Duration
+	(*Server_HTTP_CORS)(nil),      // 10: kratos.api.Server.HTTP.CORS
+	(*Data_Database)(nil),         // 11: kratos.api.Data.Database
+	(*Data_Redis)(nil),            // 12: kratos.api.Data.Redis
+	(*Observability_Trace)(nil),   // 13: kratos.api.Observability.Trace
+	(*Observability_Metrics)(nil), // 14: kratos.api.Observability.Metrics
+	(*Client_HTTP)(nil),           // 15: kratos.api.Client.HTTP
+	(*durationpb.Duration)(nil),   // 16: google.protobuf.Duration
 }
 var file_conf_conf_proto_depIdxs = []int32{
 	0,  // 0: kratos.api.Bootstrap.env:type_name -> kratos.api.Env
@@ -1023,21 +1106,22 @@ var file_conf_conf_proto_depIdxs = []int32{
 	6,  // 5: kratos.api.Bootstrap.app:type_name -> kratos.api.App
 	7,  // 6: kratos.api.Server.http:type_name -> kratos.api.Server.HTTP
 	8,  // 7: kratos.api.Server.grpc:type_name -> kratos.api.Server.GRPC
-	10, // 8: kratos.api.Data.database:type_name -> kratos.api.Data.Database
-	11, // 9: kratos.api.Data.redis:type_name -> kratos.api.Data.Redis
-	12, // 10: kratos.api.Observability.trace:type_name -> kratos.api.Observability.Trace
-	13, // 11: kratos.api.Observability.metrics:type_name -> kratos.api.Observability.Metrics
-	14, // 12: kratos.api.Client.http:type_name -> kratos.api.Client.HTTP
-	15, // 13: kratos.api.Server.HTTP.timeout:type_name -> google.protobuf.Duration
+	11, // 8: kratos.api.Data.database:type_name -> kratos.api.Data.Database
+	12, // 9: kratos.api.Data.redis:type_name -> kratos.api.Data.Redis
+	13, // 10: kratos.api.Observability.trace:type_name -> kratos.api.Observability.Trace
+	14, // 11: kratos.api.Observability.metrics:type_name -> kratos.api.Observability.Metrics
+	15, // 12: kratos.api.Client.http:type_name -> kratos.api.Client.HTTP
+	16, // 13: kratos.api.Server.HTTP.timeout:type_name -> google.protobuf.Duration
 	9,  // 14: kratos.api.Server.HTTP.real_ip:type_name -> kratos.api.Server.HTTP.RealIP
-	15, // 15: kratos.api.Server.GRPC.timeout:type_name -> google.protobuf.Duration
-	15, // 16: kratos.api.Data.Redis.read_timeout:type_name -> google.protobuf.Duration
-	15, // 17: kratos.api.Data.Redis.write_timeout:type_name -> google.protobuf.Duration
-	18, // [18:18] is the sub-list for method output_type
-	18, // [18:18] is the sub-list for method input_type
-	18, // [18:18] is the sub-list for extension type_name
-	18, // [18:18] is the sub-list for extension extendee
-	0,  // [0:18] is the sub-list for field type_name
+	10, // 15: kratos.api.Server.HTTP.cors:type_name -> kratos.api.Server.HTTP.CORS
+	16, // 16: kratos.api.Server.GRPC.timeout:type_name -> google.protobuf.Duration
+	16, // 17: kratos.api.Data.Redis.read_timeout:type_name -> google.protobuf.Duration
+	16, // 18: kratos.api.Data.Redis.write_timeout:type_name -> google.protobuf.Duration
+	19, // [19:19] is the sub-list for method output_type
+	19, // [19:19] is the sub-list for method input_type
+	19, // [19:19] is the sub-list for extension type_name
+	19, // [19:19] is the sub-list for extension extendee
+	0,  // [0:19] is the sub-list for field type_name
 }
 
 func init() { file_conf_conf_proto_init() }
@@ -1051,7 +1135,7 @@ func file_conf_conf_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_conf_conf_proto_rawDesc), len(file_conf_conf_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   14,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

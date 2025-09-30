@@ -7,6 +7,11 @@ server:
       ip_headers: ["X-Real-IP", "X-Forwarded-For", "X-Client-IP"]
       trusted_proxies: []
       trusted_header: "X-Connecting-IP"
+    cors:
+      allow_credentials: false
+      allowed_headers: ["Authorization", "Content-Type"]
+      allowed_methods: ["GET", "POST", "HEAD", "PUT", "PATCH", "DELETE"]
+      allowed_origins: ["*"]
   grpc:
     addr: 0.0.0.0:9000
     timeout: 1s

@@ -6,6 +6,7 @@ require (
 	github.com/go-kratos/kratos/contrib/middleware/validate/v2 v2.0.0-20250527152916-d6f5f00cf562
 	github.com/go-kratos/kratos/v2 v2.8.4
 	github.com/google/wire v0.6.0
+	github.com/gorilla/handlers v1.5.2
 	github.com/unkmonster/go-kit v0.0.0-20250920114300-253ad3afba2a
 	go.opentelemetry.io/otel v1.37.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.37.0
@@ -24,6 +25,7 @@ require (
 	github.com/antlr4-go/antlr/v4 v4.13.1 // indirect
 	github.com/bufbuild/protovalidate-go v0.9.2 // indirect
 	github.com/cenkalti/backoff/v5 v5.0.2 // indirect
+	github.com/felixge/httpsnoop v1.0.3 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-kratos/aegis v0.2.0 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect

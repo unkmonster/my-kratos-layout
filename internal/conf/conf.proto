@@ -32,10 +32,17 @@ message Server {
       // maybe from CDN
       string trusted_header = 3;
     }
+    message CORS {
+      bool allow_credentials = 1;
+      repeated string allowed_headers = 2;
+      repeated string allowed_methods = 3;
+      repeated string allowed_origins = 4;
+    }
     string network = 1;
     string addr = 2;
     google.protobuf.Duration timeout = 3;
     RealIP real_ip = 4;
+    CORS cors = 5;
   }
   message GRPC {
     string network = 1;
