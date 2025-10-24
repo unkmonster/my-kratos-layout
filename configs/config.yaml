@@ -1,4 +1,6 @@
 env: ENV_DEV
+log:
+  level: DEBUG
 server:
   http:
     addr: 0.0.0.0:8000

@@ -12,6 +12,7 @@ message Bootstrap {
   Data data = 3;
   Observability observability = 4;
   Client client = 5;
+  Log log = 6;
   App app = 15;
 }
 
@@ -97,6 +98,12 @@ message Client {
   }
   HTTP http = 1;
 } 
+
+message Log {
+  // DEBUG, INFO, WARN, ERROR, FATAL
+  // 如果空或无效值结果为 INFO
+  string level = 1;
+}
 
 message App {
 
