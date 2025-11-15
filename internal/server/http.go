@@ -66,11 +66,14 @@ func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, logger log.L
 	}
 	middlewares = append(middlewares, validate.ProtoValidate())
 
+	var filters []khttp.FilterFunc
+	if c.Http.Cors != nil {
+		filters = append(filters, newCorsHandler(c.Http.Cors))
+	}
+
 	var opts = []khttp.ServerOption{
 		khttp.Middleware(middlewares...),
-		khttp.Filter(
-			newCorsHandler(c.Http.Cors),
-		),
+		khttp.Filter(filters...),
 		khttp.ErrorEncoder(hideInternalErrorEncoder),
 	}
 	if c.Http.Network != "" {
