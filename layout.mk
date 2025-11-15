@@ -1,3 +1,4 @@
+# layout 下的 Makefile
 GOHOSTOS:=$(shell go env GOHOSTOS)
 GOPATH:=$(shell go env GOPATH)
 VERSION=$(shell git describe --tags --always)
@@ -58,6 +59,13 @@ service:
 	kratos new $(name) -r $(LAYOUT_REPOSITORY) --nomod && \
 	rm $(name)/layout.mk
 
+.PHONY: mono
+mono:
+	rm -rf cmd && \
+	rm -rf configs && \
+	rm -rf internal && \
+	mv layout.mk Makefile
+	
 # show help
 help:
 	@echo ''
