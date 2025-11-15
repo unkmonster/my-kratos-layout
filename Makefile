@@ -1,9 +1,9 @@
+# layout 下的 Makefile
 GOHOSTOS:=$(shell go env GOHOSTOS)
 GOPATH:=$(shell go env GOPATH)
 VERSION=$(shell git describe --tags --always)
 
-MIGRATION_DIR = ./db/migrations
-MIGRATE_CMD = migrate
+LAYOUT_REPOSITORY:=https://github.com/unkmonster/my-kratos-layout
 
 ifeq ($(GOHOSTOS), windows)
 	#the `find.exe` is different from `find` in bash/shell.
@@ -11,24 +11,34 @@ ifeq ($(GOHOSTOS), windows)
 	#changed to use git-bash.exe to run find cli or other cli friendly, caused of every developer has a Git.
 	#Git_Bash= $(subst cmd\,bin\bash.exe,$(dir $(shell where git)))
 	Git_Bash=$(subst \,/,$(subst cmd\,bin\bash.exe,$(dir $(shell where git))))
-	INTERNAL_PROTO_FILES=$(shell $(Git_Bash) -c "find internal -name *.proto")
+	API_PROTO_FILES=$(shell $(Git_Bash) -c "find api -name *.proto")
 else
-	INTERNAL_PROTO_FILES=$(shell find internal -name *.proto)
+	API_PROTO_FILES=$(shell find api -name *.proto)
 endif
 
-.PHONY: config
-# generate internal proto
-config:
-	protoc --proto_path=./internal \
-	       --proto_path=../../third_party \
-	       --proto_path=./third_party \
- 	       --go_out=paths=source_relative:./internal \
-	       $(INTERNAL_PROTO_FILES)
+.PHONY: init
+# init env
+init:
+	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+	go install github.com/go-kratos/kratos/cmd/kratos/v2@latest
+	go install github.com/go-kratos/kratos/cmd/protoc-gen-go-http/v2@latest
+	go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+	go install github.com/google/wire/cmd/wire@latest
 
-.PHONY: build
-# build
-build:
-	mkdir -p bin/ && go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/ ./...
+.PHONY: api
+# generate api proto
+api:
+	protoc --proto_path=./api \
+	       --proto_path=./third_party \
+ 	       --go_out=paths=source_relative:./api \
+ 	       --go-http_out=paths=source_relative:./api \
+ 	       --go-grpc_out=paths=source_relative:./api \
+		   --go-errors_out=paths=source_relative:./api \
+		   --validate_out=paths=source_relative,lang=go:./api \
+	       --openapi_out=fq_schema_naming=true,default_response=false,version=$(VERSION):. \
+	       $(API_PROTO_FILES) && \
+		   yq eval -o=json openapi.yaml > openapi.json
 
 .PHONY: generate
 # generate
@@ -39,18 +49,23 @@ generate:
 .PHONY: all
 # generate all
 all:
-	make config;
+	make api;
 	make generate;
 
-.PHONY: migration
-migration:
-	@if [ -z "$(name)" ]; then \
-		echo "❌ 请指定 name 参数，如: make migrate-create name=create_user"; \
-		exit 1; \
-	fi
-	@migrate create -ext sql -dir db/migrations -seq "$(name)"
-	@echo "✅ Migration created: $(name)"
+.PHONY: service
+service:
+	mkdir -p app && \
+	cd app && \
+	kratos new $(name) -r $(LAYOUT_REPOSITORY) --nomod && \
+	mv $(name)/app.mk $(name)/Makefile
 
+.PHONY: mono
+mono:
+	rm -rf cmd && \
+	rm -rf configs && \
+	rm -rf internal && \
+	rm app.mk
+	
 # show help
 help:
 	@echo ''
