@@ -11,7 +11,7 @@ RUN go mod download
 
 COPY ./api ./api
 COPY ./.git ./.git
-COPY ./third_patry ./third_patry
+COPY ./third_party ./third_party
 COPY ./app/${SERVICE_NAME} ./app/${SERVICE_NAME}
 RUN make -C app/${SERVICE_NAME} build
 
