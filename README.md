@@ -6,17 +6,17 @@ mono repo kratos template
 
 ```bash
 make mono
+git init
 ```
 
 ## Create a service
 
-``````bash
+```bash
 make service name=<SERVICE_NAME>
-``````
+```
 
 ## Build service (Docker)
 
 ```bash
 docker build -f ./deploy/build/Dockerfile --build-arg SERVICE_NAME=<SERVICE_NAME> .
 ```
-
