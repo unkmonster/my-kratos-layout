@@ -7,8 +7,8 @@ server:
     timeout: 1s
     real_ip:
       ip_headers: ["X-Real-IP", "X-Forwarded-For", "X-Client-IP"]
-      trusted_proxies: []
-      trusted_header: "X-Connecting-IP"
+      trusted_proxies: ["0.0.0.0/0"]
+      trusted_header: "Cf-Connecting-IP"
     cors:
       allow_credentials: false
       allowed_headers: ["Authorization", "Content-Type"]
