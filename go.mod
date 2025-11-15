@@ -7,7 +7,7 @@ require (
 	github.com/go-kratos/kratos/v2 v2.8.4
 	github.com/google/wire v0.6.0
 	github.com/gorilla/handlers v1.5.2
-	github.com/unkmonster/go-kit v0.0.0-20250920114300-253ad3afba2a
+	github.com/unkmonster/go-kit v0.0.0-20251115170323-a42588740284
 	go.opentelemetry.io/otel v1.37.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.37.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.37.0
