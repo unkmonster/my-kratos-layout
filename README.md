@@ -1,3 +1,22 @@
 # Kratos Project Template
 
 mono repo kratos template
+
+## Init
+
+```bash
+make mono
+```
+
+## Create a service
+
+``````bash
+make service name=<SERVICE_NAME>
+``````
+
+## Build service (Docker)
+
+```bash
+docker build -f ./deploy/build/Dockerfile --build-arg SERVICE_NAME=<SERVICE_NAME> .
+```
+
