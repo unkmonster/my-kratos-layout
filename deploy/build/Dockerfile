@@ -1,7 +1,6 @@
 FROM golang:1.24.6 AS builder
 
 ARG SERVICE_NAME
-ARG GO_MODULE_NAME
 
 # 缓存 go mod download
 WORKDIR /src
