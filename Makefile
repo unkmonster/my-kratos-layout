@@ -57,7 +57,9 @@ service:
 	mkdir -p app && \
 	cd app && \
 	kratos new $(name) -r $(LAYOUT_REPOSITORY) --nomod && \
-	mv $(name)/app.mk $(name)/Makefile
+	mv $(name)/app.mk $(name)/Makefile && \
+	rm -rf $(name)/deploy && \
+	rm $(name)/.dockerignore
 
 .PHONY: mono
 mono:
